@@ -1,0 +1,110 @@
+
+#include "stdafx.h"
+#include "core/core.hpp"
+#include "highgui/highgui.hpp"
+#include "imgproc/imgproc.hpp"
+#include "video/tracking.hpp"
+#include<iostream>
+#include <highgui.h>
+#include <opencv2/opencv.hpp>
+
+
+
+
+
+//-----------------------------------【头文件包含部分】---------------------------------------
+//     描述：包含程序所依赖的头文件
+//----------------------------------------------------------------------------------------------
+#include <opencv2/core/core.hpp>
+#include<opencv2/highgui/highgui.hpp>
+#include"opencv2/imgproc/imgproc.hpp"
+#include <iostream>
+
+//-----------------------------------【命名空间声明部分】---------------------------------------
+//     描述：包含程序所使用的命名空间
+//-----------------------------------------------------------------------------------------------  
+using namespace std;
+using namespace cv;
+
+
+//-----------------------------------【全局函数声明部分】--------------------------------------
+//     描述：全局函数声明
+//-----------------------------------------------------------------------------------------------
+static void ContrastAndBright(int, void *);
+
+//-----------------------------------【全局变量声明部分】--------------------------------------
+//     描述：全局变量声明
+//-----------------------------------------------------------------------------------------------
+int g_threshold1; //低阈值
+int g_threshold2;  //高阈值
+Mat g_srcImage, g_dstImage;//输入 输出图像
+
+vector<Vec3f> circles;//霍夫圆检测结果 （圆心+半径）
+//-----------------------------------【main( )函数】--------------------------------------------
+//     描述：控制台应用程序的入口函数，我们的程序从这里开始
+//-----------------------------------------------------------------------------------------------
+int main()
+{
+
+
+	//读入用户提供的图像
+	g_srcImage = imread("demo1.jpg");
+	//中值滤波
+	medianBlur(g_srcImage, g_srcImage, 3);
+	if (!g_srcImage.data) { printf("Oh，no，读取g_srcImage图片错误~！\n"); return false; }
+	g_dstImage = Mat::zeros(g_srcImage.size(), g_srcImage.type());
+
+	//设定对比度和亮度的初值
+	g_threshold1 = 50;
+	g_threshold2 = 150;
+
+	//创建窗口
+	namedWindow("【效果图窗口】", 1);
+
+	//创建轨迹条
+	createTrackbar("阈值1：", "【效果图窗口】", &g_threshold1, 300, ContrastAndBright);
+	createTrackbar("阈值2：", "【效果图窗口】", &g_threshold2, 300, ContrastAndBright);
+
+	//调用回调函数
+	ContrastAndBright(g_threshold1, 0);
+	ContrastAndBright(g_threshold2, 0);
+
+	//输出一些帮助信息
+	cout << endl << "\t嗯。好了，请调整滚动条观察图像效果~\n\n"
+		<< "\t按下“q”键时，程序退出~!\n"
+		;
+
+	//按下“q”键时，程序退出
+	while (char(waitKey(1)) != 'q') {}
+	return 0;
+}
+
+
+//-----------------------------【ContrastAndBright( )函数】------------------------------------
+//     描述：改变图像对比度和亮度值的回调函数
+//-----------------------------------------------------------------------------------------------
+static void ContrastAndBright(int, void *)
+{
+
+	//创建窗口
+	namedWindow("【原始图窗口】", 1);
+
+	Canny(g_srcImage, g_dstImage, g_threshold1, g_threshold2, 3);//使用Canny算子
+	Mat houghMatIn, houghMatOut;
+	houghMatIn = g_dstImage.clone();
+	houghMatOut = g_srcImage.clone();
+	HoughCircles(houghMatIn, circles, CV_HOUGH_GRADIENT, 1, 100, g_threshold2, 150, 45, 220);//霍夫圆检测 
+	//画圆
+	for (size_t i = 0; i < circles.size(); i++)
+	{
+		Vec3f c = circles[i];
+		circle(houghMatOut, Point(c[0], c[1]), c[2], Scalar(0, 255, 255),3, CV_AA);
+		cout << "R:" << c[2] <<endl;
+	}/**/
+	cout << "num:" << circles.size() << endl;
+	//显示图像
+	imshow("【原始图窗口】", houghMatOut);
+	imshow("【效果图窗口】", g_dstImage);
+}
+
+

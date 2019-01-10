@@ -1,0 +1,15 @@
+﻿  OpenCVtest.cpp
+g:\codetest\opencvtest\opencvtest\opencvtest\opencvtest.cpp(1): warning C4627: “#include <opencv2/opencv.hpp>”: 在查找预编译头使用时跳过
+  g:\codetest\opencvtest\opencvtest\opencvtest\opencvtest.cpp(1): note: 将指令添加到“stdafx.h”或重新生成预编译头
+g:\codetest\opencvtest\opencvtest\opencvtest\opencvtest.cpp(2): warning C4627: “#include <iostream>”: 在查找预编译头使用时跳过
+  g:\codetest\opencvtest\opencvtest\opencvtest\opencvtest.cpp(2): note: 将指令添加到“stdafx.h”或重新生成预编译头
+g:\codetest\opencvtest\opencvtest\opencvtest\opencvtest.cpp(3): warning C4627: “#include <vector>”: 在查找预编译头使用时跳过
+  g:\codetest\opencvtest\opencvtest\opencvtest\opencvtest.cpp(3): note: 将指令添加到“stdafx.h”或重新生成预编译头
+g:\codetest\opencv_vs2015_x64\install\include\opencv2\core\mat.hpp(2586): warning C4819: 该文件包含不能在当前代码页(936)中表示的字符。请将该文件保存为 Unicode 格式以防止数据丢失
+g:\codetest\opencv_vs2015_x64\install\include\opencv2\core\persistence.hpp : warning C4819: 该文件包含不能在当前代码页(936)中表示的字符。请将该文件保存为 Unicode 格式以防止数据丢失
+g:\codetest\opencv_vs2015_x64\install\include\opencv2\core\utility.hpp : warning C4819: 该文件包含不能在当前代码页(936)中表示的字符。请将该文件保存为 Unicode 格式以防止数据丢失
+g:\codetest\opencv_vs2015_x64\install\include\opencv2\core\utility.hpp : warning C4819: 该文件包含不能在当前代码页(936)中表示的字符。请将该文件保存为 Unicode 格式以防止数据丢失
+g:\codetest\opencv_vs2015_x64\install\include\opencv2\imgproc.hpp(592): warning C4819: 该文件包含不能在当前代码页(936)中表示的字符。请将该文件保存为 Unicode 格式以防止数据丢失
+g:\codetest\opencvtest\opencvtest\opencvtest\opencvtest.cpp(58): warning C4267: “初始化”: 从“size_t”转换到“int”，可能丢失数据
+g:\codetest\opencvtest\opencvtest\opencvtest\opencvtest.cpp(64): warning C4267: “参数”: 从“size_t”转换到“int”，可能丢失数据
+  OpenCVtest.vcxproj -> G:\CodeTest\OpenCVtest\OpenCVtest\x64\Debug\OpenCVtest.exe
